@@ -8,7 +8,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <router-link to="/" class="navbar-brand"><img src="../assets/approck/img/logo.png" alt="logo"></router-link>
+        <router-link to="/" class="navbar-brand"><img src="../assets/logos-tr.png" alt="logo"></router-link>
       </div>
       <div class="navbar-collapse collapse">
         <nav>
@@ -25,6 +25,14 @@
 
 <style scoped>
 .router-link-exact-active{
-  color: #ff5f83 !important;
+  color: #3ed6da !important;
+}
+
+.navbar-brand img {
+    width: 100px;
+    margin-left: unset;
+    height: 70px;
+    position: relative;
+    top: -10px;
 }
 </style>

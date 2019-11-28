@@ -1,11 +1,11 @@
 <template>
 <div>
-  <section class="feature-two section-padding pt-120">
+  <section class="feature-two section-padding">
     <div class="container">
       <div class="row">
         <div class="col-md-4 col-sm-4 col-xs-12">
           <div class="single_feature_two_img">
-            <img class="img-responsive wow bounceIn img-avatar" data-wow-delay=".6s" src="../assets/temp.png" alt="" style="visibility: visible; animation-delay: 0.6s; animation-name: bounceIn;">
+            <img class="img-responsive wow bounceIn img-avatar" data-wow-delay=".6s" src="../assets/temp-tr.png" alt="" style="visibility: visible; animation-delay: 0.6s; animation-name: bounceIn;">
           </div>
         </div><!-- END COL-->
         <div class="col-md-8 col-sm-8 col-xs-12">
@@ -118,11 +118,11 @@
 </template>
 
 <style scoped>
-.pt-120{
-  padding-top: 120px;
+.feature-two{
+  background: #f7f7f7;;
 }
 .img-avatar{
-  border-radius: 50%;
+  /* border-radius: 50%; */
   width: 350px;
   height: 370px;
 }
