@@ -17,22 +17,32 @@
       </div><!--- END COL -->
     </div><!--- END ROW -->
   </div><!--- END CONTAINER -->
+
+  <vodal :show="show" animation="zoom" @hide="show = false">
+      <div>{{ titleModal }}</div>
+  </vodal>
 </section>
 </template>
 <script>
+
 import axios from 'axios'
+import Vodal from 'vodal'
+
 // import Load from '@/components/Load'
 import { Carousel3d, Slide } from 'vue-carousel-3d'
 
 export default {
   data () {
     return {
-      slides: []
+      slides: [],
+      show: false,
+      titleModal: ''
     }
   },
   components: {
     Carousel3d,
-    Slide
+    Slide,
+    Vodal
   },
   mounted () {
     this.getImages()
@@ -49,6 +59,8 @@ export default {
     test (title, event) {
       console.log(event.target.src)
       console.log(title)
+      this.show = true
+      this.titleModal = title
     }
   }
 }
