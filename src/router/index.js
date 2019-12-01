@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
 import About from '@/pages/About'
+import Portofolio from '@/pages/Portofolio'
 
 Vue.use(Router)
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/about',
       name: 'About',
       component: About
+    },
+    {
+      path: '/portofolio',
+      name: 'Portofolio',
+      component: Portofolio
     }
   ],
   linkActiveClass: 'active',

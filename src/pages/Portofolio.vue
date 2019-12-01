@@ -3,16 +3,17 @@
   <div class="container">
     <div class="row">
       <div class="section-title text-center wow zoomIn">
-        <h2>XXXXXX</h2>
+        <h2>Screenshots</h2>
         <div class="line"></div>
-        <p>Our awesome dev screenshot gallery here.</p>
+        <p>Our awesome app screenshot gallery here.</p>
       </div>
       <div class="col-md-10 col-md-offset-1">
-        <gallery :images="images" :index="index" @close="index = null"></gallery>
-        <div class="image" v-for="(image, imageIndex) in images" :key="imageIndex" @click="index = imageIndex"
-          :style="{ backgroundImage: 'url(' + image + ')', width: '300px', height: '200px' }"
-        >
-        </div>
+        <carousel-3d :controls-visible="true" :inverse-scaling="1500" :space="800" :display="3">
+          <slide v-for="(slide, i) in slides" v-bind:key="i" :index="i">
+            <img :src='slide.image_first.url' v-on:click="test(slide.image_first.title,$event)">
+            <span class="title-3d">{{ slide.title }}</span>
+          </slide>
+        </carousel-3d>
       </div><!--- END COL -->
     </div><!--- END ROW -->
   </div><!--- END CONTAINER -->
@@ -20,38 +21,35 @@
 </template>
 <script>
 import axios from 'axios'
-import VueGallery from 'vue-gallery'
 // import Load from '@/components/Load'
+import { Carousel3d, Slide } from 'vue-carousel-3d'
 
 export default {
   data () {
     return {
-      images: [],
-      loading: true,
-      index: null
+      slides: []
     }
+  },
+  components: {
+    Carousel3d,
+    Slide
   },
   mounted () {
     this.getImages()
   },
   methods: {
     getImages () {
-      axios.get(`api/v1/images`).then(
+      axios.get(`api/v1/portofolio`).then(
         result => {
-          this.images = result.data.data
-          this.loading = true
-        },
-        error => {
-          console.error(error)
+          // this.slides = []
+          this.slides = result.data.data
         }
       )
+    },
+    test (title, event) {
+      console.log(event.target.src)
+      console.log(title)
     }
-    // loading (load) {
-    //   (load == true) ? alert('true') : alert('hiede')
-    // }
-  },
-  components: {
-    'gallery': VueGallery
   }
 }
 </script>
@@ -60,19 +58,12 @@ export default {
 .container{
   margin-top: 50px;
 }
-.section-title {
-  margin: auto;
+.title-3d{
+    position: absolute;
+    z-index: 1111111111;
+    left: 0;
+    padding: 10px;
 }
-
-.image {
-    float: left;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    border: 1px solid #ebebeb;
-    margin: 5px;
-  }
-
 </style>
 
 <style lang="css" scoped>

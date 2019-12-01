@@ -15,8 +15,7 @@ require('./assets/approck/css/style.css')
 
 require('./assets/approck/js/jquery-1.12.4.min.js')
 require('./assets/approck/bootstrap/js/bootstrap.min.js')
-require('./assets/approck/js/jquery.stellar.min.js')
-require('./assets/approck/js/wow.min.js')
+
 require('./assets/approck/js/scripts.js')
 
 Vue.config.productionTip = false
