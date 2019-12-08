@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
-    <router-header/>
+    <router-headerAdmin v-if="path.substr(0,6) === '/admin'"/>
+    <router-header v-else/>
     <router-view/>
     <router-footer/>
   </div>
@@ -9,13 +10,20 @@
 
 <script>
 import Header from './components/Header.vue'
+import HeaderAdmin from './components/HeaderAdmin.vue'
 import Footer from './components/Footer.vue'
 
 export default {
   name: 'App',
   components: {
     'router-header': Header,
+    'router-headerAdmin': HeaderAdmin,
     'router-footer': Footer
+  },
+  data () {
+    return {
+      path: this.$route.fullPath
+    }
   }
 }
 </script>

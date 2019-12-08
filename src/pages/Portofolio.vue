@@ -7,10 +7,10 @@
         <div class="line"></div>
         <p>Our awesome app screenshot gallery here.</p>
       </div>
-      <div class="col-md-10 col-md-offset-1">
-        <carousel-3d :controls-visible="true" :inverse-scaling="1500" :space="800" :display="3">
+      <div class="col-md-10 col-md-offset-1" v-if="slides">
+        <carousel-3d :controls-visible="true" :inverse-scaling="1500" :space="800" :display="3" :height="170">
           <slide v-for="(slide, i) in slides" v-bind:key="i" :index="i">
-            <img :src='slide.image_first.url' v-on:click="test(slide.image_first.title,$event)">
+            <img :src='slide.image_first.url' @click="showDetail(slide.image_first.id,$event)">
             <span class="title-3d">{{ slide.title }}</span>
           </slide>
         </carousel-3d>
@@ -18,14 +18,33 @@
     </div><!--- END ROW -->
   </div><!--- END CONTAINER -->
 
-  <vodal :show="show" animation="zoom" @hide="show = false">
-      <div>{{ titleModal }}</div>
+  <vodal :show="show" animation="zoom" @hide="show=false" >
+    <div class="row" v-if="contentModal" style="display: flex;flex-wrap: wrap;">
+      <div class="col-md-7 col-sm-7 col-xs-12">
+        <div class="single_feature_img">
+          <img class="img-responsive wow bounceIn" :src="contentModal.image_first.url">
+        </div>
+      </div><!-- END COL-->
+      <div class="col-md-5 col-sm-5 col-xs-12">
+
+        <div class="single_feature_one">
+          <h4>{{ contentModal.title }}</h4>
+          <p v-html="contentModal.desc" style="text-align: justify;">{{ contentModal.desc }} </p>
+        </div>
+
+        <carousel-3d :disable3d="true" :space="155" :autoplay="true" :autoplay-timeout="2500" :height="70" :width="150" :display="contentModal.images.length" style="position: absolute;bottom: -10px;">
+          <slide v-for="(slide, i) in contentModal.images" :index="i"  v-bind:key="i">
+            <img :src='slide.url' @click="selectedImages(slide.url)">
+          </slide>
+        </carousel-3d>
+      </div><!-- END COL-->
+    </div>
   </vodal>
+
 </section>
 </template>
 <script>
 
-import axios from 'axios'
 import Vodal from 'vodal'
 
 // import Load from '@/components/Load'
@@ -36,7 +55,7 @@ export default {
     return {
       slides: [],
       show: false,
-      titleModal: ''
+      contentModal: ''
     }
   },
   components: {
@@ -49,18 +68,22 @@ export default {
   },
   methods: {
     getImages () {
-      axios.get(`api/v1/portofolio`).then(
+      this.$http.get(`api/v1/portofolio`).then(
         result => {
-          // this.slides = []
           this.slides = result.data.data
         }
       )
     },
-    test (title, event) {
-      console.log(event.target.src)
-      console.log(title)
-      this.show = true
-      this.titleModal = title
+    showDetail (id, event) {
+      this.$http.get(`api/v1/portofolio/` + id).then(
+        result => {
+          this.contentModal = result.data.data
+          this.show = true
+        }
+      )
+    },
+    selectedImages (url) {
+      this.contentModal.image_first.url = url
     }
   }
 }
@@ -76,10 +99,24 @@ export default {
     left: 0;
     padding: 10px;
 }
-</style>
-
-<style lang="css" scoped>
 .navbar{
   background: red !important;
+}
+.single_feature_one{
+  padding-top: 5px !important;
+}
+
+.single_feature_one p {
+    margin: 30px 0;
+    font-size: 12px;
+    text-align: left;
+    color: #777777;
+}
+</style>
+
+<style>
+.vodal-dialog{
+    width: 80% !important;
+    height: fit-content !important;
 }
 </style>
